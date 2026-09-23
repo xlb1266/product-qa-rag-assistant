@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 
 from app.core.llm import get_llm_client
 from app.core.retrieval import RetrievedChunk
+from app.core.runtime_config import get_runtime
 
 ANSWER_PROMPT_TEMPLATE = """## 角色
 你是产品咨询智能客服助手，你需要根据对话历史、用户最新消息、以及知识回答用户问题
@@ -50,7 +51,7 @@ ANSWER_PROMPT_TEMPLATE = """## 角色
 ```
 """
 
-_FALLBACK_REPLY = "暂时不能回答这个问题"
+FALLBACK_REPLY = "暂时不能回答这个问题"
 _JSON_BLOCK_RE = re.compile(r"```(?:json)?\s*(.*?)\s*```", re.DOTALL)
 
 
@@ -119,6 +120,28 @@ def _clean_citations(raw: object, n_chunks: int) -> list[int]:
     return cleaned
 
 
+def assess_answerability(
+    chunks: list[RetrievedChunk], rerank_used: bool
+) -> tuple[bool, str]:
+    """代码层拒答预判：在调用 LLM 之前判断证据是否足以作答。
+
+    - 检索结果为空：直接拒答，不进 LLM；
+    - 有真实 rerank 分数（未降级、未 mock）且最高分低于 answerability_threshold：拒答；
+    - 重排降级或 mock 模式没有真实分数：跳过分数判断，只保留空结果拒答。
+
+    返回 (是否可答, 拒答原因)；可答时原因为空字符串。
+    chat.py 与评测脚本共用此实现，保证线上链路与评测口径一致。
+    """
+    if not chunks:
+        return False, "检索结果为空"
+    if rerank_used:
+        threshold = float(get_runtime().get("retrieval.answerability_threshold") or 0.0)
+        top_score = max(c.score for c in chunks)
+        if top_score < threshold:
+            return False, f"最高相关度 {top_score:.4f} 低于拒答阈值 {threshold}"
+    return True, ""
+
+
 async def generate_answer(
     history: list[dict], message: str, chunks: list[RetrievedChunk]
 ) -> AnswerResult:
@@ -136,12 +159,12 @@ async def generate_answer(
     try:
         data = _extract_json(content)
         useful = bool(data.get("useful", False))
-        text = str(data.get("content") or "").strip() or _FALLBACK_REPLY
+        text = str(data.get("content") or "").strip() or FALLBACK_REPLY
         citations = _clean_citations(data.get("citations"), len(chunks))
     except (json.JSONDecodeError, ValueError, AttributeError):
-        return AnswerResult(useful=False, content=_FALLBACK_REPLY)
+        return AnswerResult(useful=False, content=FALLBACK_REPLY)
 
     if not useful:
-        text = _FALLBACK_REPLY
+        text = FALLBACK_REPLY
         citations = []
     return AnswerResult(useful=useful, content=text, citations=citations)

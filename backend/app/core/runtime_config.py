@@ -34,6 +34,11 @@ _PARAM_DEFS: dict[str, ParamDef] = {
         ParamDef("retrieval.candidate_top_n", "融合后送重排的候选条数", "int", 8, 1, 20, "检索链路"),
         ParamDef("retrieval.rerank_top_k", "重排后最终保留条数", "int", 4, 1, 10, "检索链路"),
         ParamDef("retrieval.rerank_threshold", "重排相关性阈值（低于此分过滤）", "float", 0.6, 0.0, 1.0, "检索链路"),
+        ParamDef(
+            "retrieval.answerability_threshold",
+            "拒答预判阈值（最高相关度低于此值不进 LLM 直接拒答）",
+            "float", 0.6, 0.0, 1.0, "检索链路",
+        ),
         ParamDef("chat.max_history", "传给模型的对话历史条数", "int", 20, 1, 50, "会话链路"),
         ParamDef(
             "debug.mock_third_party",

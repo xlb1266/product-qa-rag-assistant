@@ -37,7 +37,7 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.core.answer import generate_answer  # noqa: E402
+from app.core.answer import FALLBACK_REPLY, AnswerResult, assess_answerability, generate_answer  # noqa: E402
 from app.core.embeddings import get_embedding_client  # noqa: E402
 from app.core.llm import get_llm_client  # noqa: E402
 from app.core.reranker import RerankError, get_reranker  # noqa: E402
@@ -252,12 +252,23 @@ async def run_answer_pass(
     裁判上下文直接取当次检索的 ret.chunks，不重新检索（保证评的就是这次回答）。
     useful=false 的 answerable 条目（误拒）没有事实陈述可评，跳过裁判，
     由误拒率指标单独覆盖；unanswerable / ambiguous 不打裁判分。
+
+    阶段 2 起，回答前先过 assess_answerability 代码层预判（与线上 chat.py
+    同一实现）：被拦截的条目不调 DeepSeek，直接记为兜底话术拒答。
     """
     results: list[dict] = []
     judge_verdicts: list[dict] = []
+    precheck_blocked = 0
     for item in items:
         ret = await retrieve(item["query"])
-        ans = await generate_answer(history=[], message=item["query"], chunks=ret.chunks)
+        answerable, _ = assess_answerability(ret.chunks, ret.rerank_used)
+        if answerable:
+            ans = await generate_answer(history=[], message=item["query"], chunks=ret.chunks)
+            blocked = False
+        else:
+            ans = AnswerResult(useful=False, content=FALLBACK_REPLY)  # 代码层拦截，未进 LLM
+            blocked = True
+            precheck_blocked += 1
         correct = M.answer_correct(item, ans.useful, ans.content)
         results.append(
             {
@@ -267,11 +278,12 @@ async def run_answer_pass(
                 "useful": ans.useful,
                 "content": ans.content,
                 "correct": correct,
+                "precheck_blocked": blocked,
                 "chunks_used": len(ret.chunks),
             }
         )
         mark = "✓" if correct else ("△" if item["type"] == "ambiguous" else "✗")
-        suffix = ""
+        suffix = " | 预判拦截" if blocked else ""
         if judge_ids and item["id"] in judge_ids and item["type"] == "answerable" and ans.useful:
             contexts = [c.content for c in ret.chunks]
             try:
@@ -297,6 +309,7 @@ async def run_answer_pass(
         print(f"  [{item['id']}] {mark} useful={ans.useful} | {ans.content[:50]}{suffix}")
     return {
         "metrics": {k: round(v, 4) for k, v in M.aggregate_answer_metrics(results).items()},
+        "precheck_blocked": precheck_blocked,
         "ambiguous_breakdown": {
             "total": len([r for r in results if r["type"] == "ambiguous"]),
             "refused": len([r for r in results if r["type"] == "ambiguous" and not r["useful"]]),
@@ -541,6 +554,7 @@ async def main() -> None:
               f"unanswerable 拒答正确率={m['refusal_accuracy']} "
               f"answerable 误拒率={m['answerable_refused_rate']} "
               f"unanswerable 误答率={m['unanswerable_answered_rate']}")
+        print(f"  代码层 answerability 预判拦截 {answer_layer['precheck_blocked']} 条（未进 LLM）")
         print(f"  ambiguous 行为：{answer_layer['ambiguous_breakdown']['refused']}"
               f"/{answer_layer['ambiguous_breakdown']['total']} 拒答")
 

@@ -21,7 +21,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
 from app.api.messages import _row_to_dict
-from app.core.answer import AnswerResult, generate_answer
+from app.core.answer import FALLBACK_REPLY, AnswerResult, assess_answerability, generate_answer
 from app.core.embeddings import EmbeddingError
 from app.core.intent import CHAT, IntentResult, detect_intent
 from app.core.llm import LLMError, get_llm_client
@@ -398,61 +398,85 @@ async def chat(
         )
     )
 
-    # ----- 节点4：回答生成 -----
-    answer_input = {
-        "question": req.message,
-        "history_count": len(history),
-        "chunks_count": len(retrieval.chunks),
-    }
+    # ----- 节点4：answerability 预判（代码层拒答，命中则不进 LLM）-----
+    answerable, refuse_reason = assess_answerability(retrieval.chunks, retrieval.rerank_used)
     t0 = time.perf_counter()
-    try:
-        if _mock_on():
-            # 调试 mock：不调 DeepSeek，基于本地检索结果拼一个模拟回答
-            if retrieval.chunks:
-                top = retrieval.chunks[0]
-                answer = AnswerResult(
-                    useful=True,
-                    content=f"[mock] 模拟回答（调试模式）：最相关的知识来自《{top.document_title}》"
-                    f"「{top.heading_path or top.content[:24]}」，BM25 分数 {top.bm25_score}。",
-                    citations=[1],
+    trace.append(
+        _make_node(
+            "answerability",
+            "本地规则（无外部调用）",
+            {
+                "chunks_count": len(retrieval.chunks),
+                "rerank_used": retrieval.rerank_used,
+                "top_score": max((c.score for c in retrieval.chunks), default=None),
+                "threshold": get_runtime().get("retrieval.answerability_threshold"),
+            },
+            {
+                "answerable": answerable,
+                "reason": refuse_reason if refuse_reason else "证据充足，进入回答生成",
+            },
+            int((time.perf_counter() - t0) * 1000),
+        )
+    )
+
+    # ----- 节点5：回答生成（answerability 拦截时跳过，直接走全系统兜底话术）-----
+    if not answerable:
+        answer = AnswerResult(useful=False, content=FALLBACK_REPLY)
+    else:
+        answer_input = {
+            "question": req.message,
+            "history_count": len(history),
+            "chunks_count": len(retrieval.chunks),
+        }
+        t0 = time.perf_counter()
+        try:
+            if _mock_on():
+                # 调试 mock：不调 DeepSeek，基于本地检索结果拼一个模拟回答
+                if retrieval.chunks:
+                    top = retrieval.chunks[0]
+                    answer = AnswerResult(
+                        useful=True,
+                        content=f"[mock] 模拟回答（调试模式）：最相关的知识来自《{top.document_title}》"
+                        f"「{top.heading_path or top.content[:24]}」，BM25 分数 {top.bm25_score}。",
+                        citations=[1],
+                    )
+                else:
+                    answer = AnswerResult(useful=False, content=FALLBACK_REPLY)
+                trace.append(
+                    _make_node(
+                        "answer_generation", "DeepSeek(mock)", answer_input,
+                        {
+                            "useful": answer.useful,
+                            "content": answer.content,
+                            "citations": answer.citations,
+                            "mocked": True,
+                        },
+                        int((time.perf_counter() - t0) * 1000),
+                    )
                 )
             else:
-                answer = AnswerResult(useful=False, content="暂时不能回答这个问题")
+                answer = await generate_answer(history, req.message, retrieval.chunks)
+                trace.append(
+                    _make_node(
+                        "answer_generation", "DeepSeek", answer_input,
+                        {
+                            "useful": answer.useful,
+                            "content": answer.content,
+                            "citations": answer.citations,
+                        },
+                        int((time.perf_counter() - t0) * 1000),
+                    )
+                )
+        except LLMError as e:
             trace.append(
                 _make_node(
-                    "answer_generation", "DeepSeek(mock)", answer_input,
-                    {
-                        "useful": answer.useful,
-                        "content": answer.content,
-                        "citations": answer.citations,
-                        "mocked": True,
-                    },
-                    int((time.perf_counter() - t0) * 1000),
+                    "answer_generation", "DeepSeek", answer_input, None,
+                    int((time.perf_counter() - t0) * 1000), "error", f"回答生成失败：{e}",
                 )
             )
-        else:
-            answer = await generate_answer(history, req.message, retrieval.chunks)
-            trace.append(
-                _make_node(
-                    "answer_generation", "DeepSeek", answer_input,
-                    {
-                        "useful": answer.useful,
-                        "content": answer.content,
-                        "citations": answer.citations,
-                    },
-                    int((time.perf_counter() - t0) * 1000),
-                )
-            )
-    except LLMError as e:
-        trace.append(
-            _make_node(
-                "answer_generation", "DeepSeek", answer_input, None,
-                int((time.perf_counter() - t0) * 1000), "error", f"回答生成失败：{e}",
-            )
-        )
-        _insert_log(user["id"], req.message, result.intent, trace,
-                    int((time.perf_counter() - chain_start) * 1000), "error")
-        raise HTTPException(502, f"回答生成失败：{e}")
+            _insert_log(user["id"], req.message, result.intent, trace,
+                        int((time.perf_counter() - chain_start) * 1000), "error")
+            raise HTTPException(502, f"回答生成失败：{e}")
 
     answer_out = AnswerOut(
         useful=answer.useful, content=answer.content, citations=answer.citations

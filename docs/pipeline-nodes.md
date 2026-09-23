@@ -16,12 +16,14 @@
 | `intent_recognition` | DeepSeek | 意图识别 + 指代消解，输出 intent/confidence/resolved_question/reason | 编排层独立计时 |
 | `retrieval` | 百炼embedding + FAISS + 本地BM25 | 语义 + BM25 双路召回、RRF 融合，query 向量化耗时报错都记在这 | 编排层独立计时（含重排） |
 | `rerank` | 百炼 qwen3-rerank | 重排在 retrieve() 内部执行，编排层无法单独拆时 | duration_ms 恒为 0，耗时含入 retrieval 节点（output.note 注明） |
-| `answer_generation` | DeepSeek | 基于检索知识生成回答，输出 useful/content | 编排层独立计时 |
+| `answerability` | 本地规则（无外部调用） | 代码层拒答预判：检索结果为空、或最高 rerank 分数低于 `retrieval.answerability_threshold` 时直接拒答，不进 LLM。output.answerable=false 即本次请求被拦截 | 本地判断，独立计时（通常 0ms） |
+| `answer_generation` | DeepSeek | 基于检索知识生成回答，输出 useful/content/citations | 编排层独立计时 |
 | `chat_reply` | DeepSeek | CHAT 分支的闲聊回复 | 编排层独立计时 |
 
 ## 分支链路
 
-- SUPPORT / FEEDBACK（知识库问答）：`intent_recognition → retrieval → rerank → answer_generation`
+- SUPPORT / FEEDBACK（知识库问答）：`intent_recognition → retrieval → rerank → answerability → answer_generation`
+  - answerability 拦截时链路在此结束：trace 无 answer_generation 节点，消息与日志照常落库，回复用全系统兜底话术"暂时不能回答这个问题"
 - CHAT（闲聊）：`intent_recognition → chat_reply`
 
 ## 节点字段
@@ -52,6 +54,7 @@
 | `retrieval.candidate_top_n` | 8 | 1-20 | retrieval（送重排候选数） |
 | `retrieval.rerank_top_k` | 4 | 1-10 | rerank（最终保留条数） |
 | `retrieval.rerank_threshold` | 0.6 | 0-1 | rerank（相关性过滤阈值） |
+| `retrieval.answerability_threshold` | 0.6 | 0-1 | answerability（拒答预判阈值：最高 rerank 分数低于此值直接拒答；重排降级/mock 无真实分数时跳过分数判断） |
 | `chat.max_history` | 20 | 1-50 | intent_recognition / answer_generation（上下文条数） |
 | `debug.mock_third_party` | false | bool | 全部第三方调用点（mock 模拟返回） |
 
