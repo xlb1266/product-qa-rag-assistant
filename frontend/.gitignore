@@ -1,0 +1,8 @@
+# 前端依赖
+node_modules/
+dist/
+.vite/
+*.local
+
+# TS 构建缓存
+tsconfig.tsbuildinfo

@@ -1,0 +1,91 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  box-shadow: var(--shadow);
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+}
+
+.app__header h1 {
+  font-size: 18px;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.app__tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.app__tab {
+  padding: 8px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--text-soft);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.app__tab:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.app__tab--active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.app__header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app__user-email {
+  font-size: 13px;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+.app__logout {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--text-soft);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.app__logout:hover {
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+/* 启动校验 token 时的全屏加载态 */
+.app__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-soft);
+  font-size: 14px;
+}

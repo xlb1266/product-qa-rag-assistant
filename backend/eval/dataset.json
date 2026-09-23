@@ -1,0 +1,373 @@
+{
+  "version": "1.0",
+  "created_at": "2026-09-22",
+  "description": "RAG 客服离线评测测试集。出题依据 test-data/空气小猪产品知识库.md 的真实分块内容逐条人工校对；expected_keywords 必须逐词命中期望 chunk 的正文（子串匹配），不绑 chunk_id 以便阶段 4 改切分策略后复用。",
+  "notes": [
+    "answerable：知识库内有明确答案，检索应命中期望内容，回答应 useful=true 且包含 expected_answer_points",
+    "unanswerable：知识库外问题，期望回答层拒答（useful=false）",
+    "ambiguous：模糊表述或闲聊，仅记录系统行为分布（拒答/作答），不进硬指标",
+    "expected_keywords 取自期望 chunk 正文（避开标题行），且刻意避开压测超大文档的模板句用词"
+  ],
+  "items": [
+    {
+      "id": "a01",
+      "query": "空气小猪是翻译软件吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "1.1 核心定位",
+      "expected_keywords": ["不是翻译软件", "语言教学工具"],
+      "expected_answer_points": ["翻译软件"]
+    },
+    {
+      "id": "a02",
+      "query": "你们和普通翻译软件有什么区别？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "1.1 核心定位",
+      "expected_keywords": ["看懂外语", "目标语覆盖"],
+      "expected_answer_points": ["看懂外语"]
+    },
+    {
+      "id": "a03",
+      "query": "为什么我学了那么久外语，还是没法在日常生活里用起来？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "1.2 解决的核心问题",
+      "expected_keywords": ["输入和输出相互割裂", "重用已经发生的聊天内容"],
+      "expected_answer_points": ["聊天内容"]
+    },
+    {
+      "id": "a04",
+      "query": "空气小猪在哪些设备上可以用？小程序体验怎么样？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "2.1 使用平台",
+      "expected_keywords": ["安卓", "小程序仅有基本功能"],
+      "expected_answer_points": ["App", "小程序"]
+    },
+    {
+      "id": "a05",
+      "query": "纯血鸿蒙的手机能安装吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "2.1 使用平台",
+      "expected_keywords": ["纯血版本鸿蒙暂不支持"],
+      "expected_answer_points": ["不支持"]
+    },
+    {
+      "id": "a06",
+      "query": "怎么邀请微信好友一起聊天？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "2.2 添加微信好友",
+      "expected_keywords": ["右上角的加号", "一键添加微信好友"],
+      "expected_answer_points": ["右上角"]
+    },
+    {
+      "id": "a07",
+      "query": "我的朋友不想学外语，我们还能一起用吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "2.3 聊天对方是否需要配合",
+      "expected_keywords": ["不要求聊天对方配合", "不需要改变聊天语言"],
+      "expected_answer_points": ["改变聊天语言"]
+    },
+    {
+      "id": "a08",
+      "query": "我和朋友设置的目标语言不一样可以吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "2.4 双方设置不同的目标语言",
+      "expected_keywords": ["独立选择自己的目标语言", "互不影响"],
+      "expected_answer_points": ["互不影响"]
+    },
+    {
+      "id": "a09",
+      "query": "国外的手机号可以注册吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "2.5 国外的号码可以注册吗",
+      "expected_keywords": ["仅支持国内的手机号码"],
+      "expected_answer_points": ["国内"]
+    },
+    {
+      "id": "a10",
+      "query": "可以用微信登录吗？还支持哪些登录方式？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "2.6 支持哪些登录、注册方式",
+      "expected_keywords": ["微信登录", "apple 账号登录"],
+      "expected_answer_points": ["微信"]
+    },
+    {
+      "id": "a11",
+      "query": "朋友发消息过来，我会先看到外语还是原文？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "3.2 收到对方消息后的处理流程",
+      "expected_keywords": ["先看到对方的原始输入", "自动朗读目标语言内容"],
+      "expected_answer_points": ["原文", "目标语言"]
+    },
+    {
+      "id": "a12",
+      "query": "我发出去的消息，对方看到的是翻译后的外语吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "3.3 用户发送消息后的处理流程",
+      "expected_keywords": ["聊天对方看到的仍然是用户输入的原始语言"],
+      "expected_answer_points": ["原始语言"]
+    },
+    {
+      "id": "a13",
+      "query": "单击一条聊天消息会发生什么？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "4.1 单击消息",
+      "expected_keywords": ["朗读该消息对应的目标语言内容", "再单击一次"],
+      "expected_answer_points": ["目标语言", "朗读"]
+    },
+    {
+      "id": "a14",
+      "query": "怎么一次看到整段对话的全部原文？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "4.2 双击空白处",
+      "expected_keywords": ["双击当前对话的空白处", "还原当前对话中的全部原始输入"],
+      "expected_answer_points": ["双击", "空白处"]
+    },
+    {
+      "id": "a15",
+      "query": "只想看某一条消息的原文怎么操作？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "4.3 双击消息",
+      "expected_keywords": ["双击某一条消息", "确认原始内容"],
+      "expected_answer_points": ["双击"]
+    },
+    {
+      "id": "a16",
+      "query": "播客模式怎么开启？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "4.4 长按消息",
+      "expected_keywords": ["长按任意一条消息", "连续朗读后续所有消息"],
+      "expected_answer_points": ["长按"]
+    },
+    {
+      "id": "a17",
+      "query": "通勤路上不方便看手机，有什么适合我的功能？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "4.4 长按消息",
+      "expected_keywords": ["通勤", "做家务"],
+      "expected_answer_points": ["播客模式"]
+    },
+    {
+      "id": "a18",
+      "query": "Memo 是什么？会给我布置学习任务吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "5.1 Memo 是什么",
+      "expected_keywords": ["语言材料管理系统", "不会设置学习任务"],
+      "expected_answer_points": ["学习任务", "不会"]
+    },
+    {
+      "id": "a19",
+      "query": "Memo 里可以保存哪些内容？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "5.2 Memo 可以保存的内容",
+      "expected_keywords": ["内置词书", "考研词汇"],
+      "expected_answer_points": ["词书", "词汇"]
+    },
+    {
+      "id": "a20",
+      "query": "聊天时看到生词怎么收藏到 Memo？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "5.4 从对话收藏内容到 Memo",
+      "expected_keywords": ["心号", "对话词卡"],
+      "expected_answer_points": ["收藏"]
+    },
+    {
+      "id": "a21",
+      "query": "AI 语伴会纠正我的语法错误吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "6.1 AI 语伴是什么",
+      "expected_keywords": ["不讲解语法", "不会纠正用户的语言错误"],
+      "expected_answer_points": ["纠正", "语法"]
+    },
+    {
+      "id": "a22",
+      "query": "身边没有外国朋友练口语怎么办？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "6.3 AI 语伴与真人聊天的关系",
+      "expected_keywords": ["不会替代真人社交", "保持目标语言的使用"],
+      "expected_answer_points": ["AI 语伴"]
+    },
+    {
+      "id": "a23",
+      "query": "空气小猪有系统课程吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "7.1 当前不提供的功能",
+      "expected_keywords": ["不提供系统课程", "不制定学习计划"],
+      "expected_answer_points": ["系统课程"]
+    },
+    {
+      "id": "a24",
+      "query": "坚持用空气小猪能保证我通过雅思考试吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "7.2 学习效果说明",
+      "expected_keywords": ["频率和时长"],
+      "expected_answer_points": ["频率", "时长"]
+    },
+    {
+      "id": "a25",
+      "query": "点了一条消息但是没有任何声音，怎么办？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "8.1 没有声音",
+      "expected_keywords": ["检查设备音量", "静音状态"],
+      "expected_answer_points": ["音量", "静音"]
+    },
+    {
+      "id": "a26",
+      "query": "外语显示太快了，原文还没看完就没了，怎么办？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "8.3 显示太快",
+      "expected_keywords": ["双击对话空白处还原全部原始输入", "双击对应消息查看该条原文"],
+      "expected_answer_points": ["双击", "原文"]
+    },
+    {
+      "id": "a27",
+      "query": "我可以学习哪些语言？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "8.5 我可以学哪种语言",
+      "expected_keywords": ["英语、法语、德语", "粤语"],
+      "expected_answer_points": ["英语", "日语", "粤语"]
+    },
+    {
+      "id": "a28",
+      "query": "空气小猪要钱吗？以后会收费吗？",
+      "type": "answerable",
+      "expected_doc": "空气小猪产品知识库.md",
+      "expected_section": "8.7 收费吗",
+      "expected_keywords": ["当前没有收费", "不排除会收费"],
+      "expected_answer_points": ["免费", "收费"]
+    },
+    {
+      "id": "u01",
+      "query": "你们的股票代码是多少？",
+      "type": "unanswerable",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "知识库无公司证券信息，期望拒答"
+    },
+    {
+      "id": "u02",
+      "query": "你们公司总部在哪个城市？",
+      "type": "unanswerable",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "知识库无公司信息，期望拒答"
+    },
+    {
+      "id": "u03",
+      "query": "我买完后悔了，退货退款政策是什么？",
+      "type": "unanswerable",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "产品当前免费且知识库无退换货内容，期望拒答"
+    },
+    {
+      "id": "u04",
+      "query": "你们怎么保护我的聊天隐私数据？",
+      "type": "unanswerable",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "知识库无隐私安全说明，期望拒答"
+    },
+    {
+      "id": "u05",
+      "query": "什么时候出 Windows 电脑版？",
+      "type": "unanswerable",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "知识库只提 App/小程序/鸿蒙，无 PC 版计划，期望拒答"
+    },
+    {
+      "id": "u06",
+      "query": "可以接入 WhatsApp 吗？",
+      "type": "unanswerable",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "知识库只提微信，期望拒答"
+    },
+    {
+      "id": "u07",
+      "query": "你们公司现在有多少员工？",
+      "type": "unanswerable",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "知识库无公司规模信息，期望拒答"
+    },
+    {
+      "id": "u08",
+      "query": "和多邻国比哪个更好用？",
+      "type": "unanswerable",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "知识库无竞品对比，期望拒答"
+    },
+    {
+      "id": "b01",
+      "query": "你好呀",
+      "type": "ambiguous",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "闲聊，观察是否礼貌回应且不编造"
+    },
+    {
+      "id": "b02",
+      "query": "你们这个产品怎么用啊",
+      "type": "ambiguous",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "过于模糊，观察是否澄清或给出概述"
+    },
+    {
+      "id": "b03",
+      "query": "再详细说说",
+      "type": "ambiguous",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "单轮无指代，观察是否拒答或澄清"
+    },
+    {
+      "id": "b04",
+      "query": "这个软件到底怎么样啊",
+      "type": "ambiguous",
+      "expected_doc": null,
+      "expected_keywords": [],
+      "expected_answer_points": [],
+      "note": "评价类模糊问题，观察行为分布"
+    }
+  ]
+}

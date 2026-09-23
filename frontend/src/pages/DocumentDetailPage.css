@@ -1,0 +1,101 @@
+.doc-page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.doc-page__toolbar {
+  display: flex;
+}
+
+.doc-page__meta {
+  padding: 18px 20px;
+  background: var(--bg-page);
+  border-radius: 12px;
+}
+
+.doc-page__meta h2 {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.doc-page__meta-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.doc-page__error {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #fdeeee;
+  color: #c62828;
+  font-size: 13px;
+}
+
+.doc-page__chunks h3 {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.doc-page__chunk {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.doc-page__chunk-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: var(--bg-page);
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.doc-page__chunk-seq {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.doc-page__chunk-path {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.doc-page__chunk-faiss {
+  margin-left: auto;
+  color: var(--text-soft);
+  font-family: Consolas, monospace;
+}
+
+.doc-page__chunk-content {
+  padding: 14px;
+  margin: 0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text-main);
+}
+
+.doc-page__empty {
+  color: var(--text-soft);
+  text-align: center;
+  padding: 40px 0;
+}
+
+.doc-page__empty--err {
+  color: #c62828;
+}

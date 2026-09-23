@@ -1,0 +1,34 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  line-height: 1.6;
+
+  /* 浅色系主题 */
+  --bg-page: #f5f7fa;
+  --bg-card: #ffffff;
+  --bg-user: #e8f0fe;
+  --bg-bot: #ffffff;
+  --text-main: #1f2933;
+  --text-soft: #6b7280;
+  --primary: #4a90d9;
+  --primary-hover: #3a7bc8;
+  --border: #e5e7eb;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+}

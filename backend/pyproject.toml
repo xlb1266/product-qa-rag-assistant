@@ -1,0 +1,13 @@
+[project]
+name = "kongqixiaozhu-backend"
+version = "0.1.0"
+description = "基于知识库的 AI 客服问答系统 - 后端"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.34.0",
+    "faiss-cpu>=1.9.0",
+    "pydantic-settings>=2.6.0",
+    "httpx>=0.28.0",
+    "python-multipart>=0.0.32",
+]

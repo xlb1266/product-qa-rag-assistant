@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# 后端数据
+backend/data/*.db
+backend/data/*.faiss
+backend/data/*.pkl
+backend/data/*.json
+
+# 前端
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 日志与工具运行状态
+*.log
+.playwright-cli/
+.zcode/

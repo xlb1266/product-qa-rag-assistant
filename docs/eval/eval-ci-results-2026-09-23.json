@@ -1,0 +1,1496 @@
+{
+  "meta": {
+    "date": "2026-09-23",
+    "mode": "CI 门禁",
+    "dataset_size": 40,
+    "answerable": 28,
+    "params": {
+      "retrieval.semantic_top_n": 10,
+      "retrieval.candidate_top_n": 8,
+      "retrieval.rerank_top_k": 4,
+      "retrieval.rerank_threshold": 0.6
+    },
+    "elapsed_s": 59.3,
+    "api_calls": {
+      "embed": 40,
+      "rerank": 40,
+      "llm": 45
+    },
+    "skip_answer": false,
+    "judge_ids": [
+      "a01",
+      "a03",
+      "a04",
+      "a06",
+      "a07"
+    ],
+    "grid_run": false
+  },
+  "retrieval_metrics": {
+    "RRF排序": {
+      "recall@4": 1.0,
+      "recall@8": 1.0,
+      "mrr": 0.8869,
+      "ndcg@4": 0.9341
+    },
+    "rerank后": {
+      "recall@4": 0.9286,
+      "recall@8": 0.9286,
+      "mrr": 0.8393,
+      "ndcg@4": 0.8805
+    }
+  },
+  "retrieval_per_item": [
+    {
+      "id": "a01",
+      "query": "空气小猪是翻译软件吗？",
+      "expected_section": "1.1 核心定位",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.9559,
+        0.894,
+        0.8755,
+        0.8453
+      ],
+      "candidate_rerank_scores": [
+        0.9559,
+        0.894,
+        0.8755,
+        0.8453,
+        0.7361,
+        0.6921,
+        0.69,
+        0.6899
+      ],
+      "expected_chunk_hit_score": 0.9559
+    },
+    {
+      "id": "a02",
+      "query": "你们和普通翻译软件有什么区别？",
+      "expected_section": "1.1 核心定位",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.6461
+      ],
+      "candidate_rerank_scores": [
+        0.6461,
+        0.399,
+        0.3213,
+        0.3138,
+        0.2996,
+        0.2917,
+        0.2764,
+        0.2297
+      ],
+      "expected_chunk_hit_score": 0.6461
+    },
+    {
+      "id": "a03",
+      "query": "为什么我学了那么久外语，还是没法在日常生活里用起来？",
+      "expected_section": "1.2 解决的核心问题",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8203
+      ],
+      "candidate_rerank_scores": [
+        0.8203,
+        0.5751,
+        0.494,
+        0.448,
+        0.4116,
+        0.3097,
+        0.2989,
+        0.238
+      ],
+      "expected_chunk_hit_score": 0.8203
+    },
+    {
+      "id": "a04",
+      "query": "空气小猪在哪些设备上可以用？小程序体验怎么样？",
+      "expected_section": "2.1 使用平台",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.9385,
+        0.9237,
+        0.8335,
+        0.8203
+      ],
+      "candidate_rerank_scores": [
+        0.9385,
+        0.9237,
+        0.8335,
+        0.8203,
+        0.6282,
+        0.6045,
+        0.5367,
+        0.4899
+      ],
+      "expected_chunk_hit_score": 0.9385
+    },
+    {
+      "id": "a05",
+      "query": "纯血鸿蒙的手机能安装吗？",
+      "expected_section": "2.1 使用平台",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 2,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 0.5,
+      "rrf_ndcg@4": 1.5,
+      "rerank_ndcg@4": 1.1309297535714575,
+      "rerank_final_scores": [
+        0.9111,
+        0.8969,
+        0.848
+      ],
+      "candidate_rerank_scores": [
+        0.9111,
+        0.8969,
+        0.848,
+        0.4182,
+        0.4002,
+        0.3408,
+        0.3374,
+        0.3356
+      ],
+      "expected_chunk_hit_score": 0.8969
+    },
+    {
+      "id": "a06",
+      "query": "怎么邀请微信好友一起聊天？",
+      "expected_section": "2.2 添加微信好友",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": null,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 0.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 0.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 0.0,
+      "rerank_final_scores": [
+        0.7144
+      ],
+      "candidate_rerank_scores": [
+        0.7144,
+        0.5041,
+        0.4395,
+        0.4166,
+        0.4102,
+        0.4087,
+        0.4055,
+        0.3982
+      ],
+      "expected_chunk_hit_score": 0.5041
+    },
+    {
+      "id": "a07",
+      "query": "我的朋友不想学外语，我们还能一起用吗？",
+      "expected_section": "2.3 聊天对方是否需要配合",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8315,
+        0.6232
+      ],
+      "candidate_rerank_scores": [
+        0.8315,
+        0.6232,
+        0.5792,
+        0.5673,
+        0.5419,
+        0.4885,
+        0.4225,
+        0.2985
+      ],
+      "expected_chunk_hit_score": 0.8315
+    },
+    {
+      "id": "a08",
+      "query": "我和朋友设置的目标语言不一样可以吗？",
+      "expected_section": "2.4 双方设置不同的目标语言",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8986,
+        0.8379,
+        0.6224,
+        0.621
+      ],
+      "candidate_rerank_scores": [
+        0.8986,
+        0.8379,
+        0.6224,
+        0.621,
+        0.5941,
+        0.4976,
+        0.4371,
+        0.4225
+      ],
+      "expected_chunk_hit_score": 0.8986
+    },
+    {
+      "id": "a09",
+      "query": "国外的手机号可以注册吗？",
+      "expected_section": "2.5 国外的号码可以注册吗",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8992
+      ],
+      "candidate_rerank_scores": [
+        0.8992,
+        0.4593,
+        0.3323,
+        0.2715,
+        0.2599,
+        0.2572,
+        0.2539,
+        0.1574
+      ],
+      "expected_chunk_hit_score": 0.8992
+    },
+    {
+      "id": "a10",
+      "query": "可以用微信登录吗？还支持哪些登录方式？",
+      "expected_section": "2.6 支持哪些登录、注册方式",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8095
+      ],
+      "candidate_rerank_scores": [
+        0.8095,
+        0.3724,
+        0.3422,
+        0.3199,
+        0.3061,
+        0.2737,
+        0.2563,
+        0.1425
+      ],
+      "expected_chunk_hit_score": 0.8095
+    },
+    {
+      "id": "a11",
+      "query": "朋友发消息过来，我会先看到外语还是原文？",
+      "expected_section": "3.2 收到对方消息后的处理流程",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 2,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 0.5,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 0.6309297535714575,
+      "rerank_final_scores": [
+        0.8109,
+        0.7889,
+        0.663,
+        0.645
+      ],
+      "candidate_rerank_scores": [
+        0.8109,
+        0.7889,
+        0.663,
+        0.645,
+        0.6306,
+        0.578,
+        0.5183,
+        0.4814
+      ],
+      "expected_chunk_hit_score": 0.7889
+    },
+    {
+      "id": "a12",
+      "query": "我发出去的消息，对方看到的是翻译后的外语吗？",
+      "expected_section": "3.3 用户发送消息后的处理流程",
+      "rerank_used": true,
+      "rrf_hit_rank": 2,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 0.5,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 0.6309297535714575,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8479,
+        0.7465,
+        0.7059
+      ],
+      "candidate_rerank_scores": [
+        0.8479,
+        0.7465,
+        0.7059,
+        0.5819,
+        0.5316,
+        0.493,
+        0.48,
+        0.4243
+      ],
+      "expected_chunk_hit_score": 0.8479
+    },
+    {
+      "id": "a13",
+      "query": "单击一条聊天消息会发生什么？",
+      "expected_section": "4.1 单击消息",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8997,
+        0.6605,
+        0.6371
+      ],
+      "candidate_rerank_scores": [
+        0.8997,
+        0.6605,
+        0.6371,
+        0.5708,
+        0.5085,
+        0.4377,
+        0.3943,
+        0.3062
+      ],
+      "expected_chunk_hit_score": 0.8997
+    },
+    {
+      "id": "a14",
+      "query": "怎么一次看到整段对话的全部原文？",
+      "expected_section": "4.2 双击空白处",
+      "rerank_used": true,
+      "rrf_hit_rank": 2,
+      "rerank_hit_rank": 2,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 0.5,
+      "rerank_mrr": 0.5,
+      "rrf_ndcg@4": 0.6309297535714575,
+      "rerank_ndcg@4": 0.6309297535714575,
+      "rerank_final_scores": [
+        0.9018,
+        0.8064,
+        0.7651
+      ],
+      "candidate_rerank_scores": [
+        0.9018,
+        0.8064,
+        0.7651,
+        0.5457,
+        0.4776,
+        0.4264,
+        0.4215,
+        0.2516
+      ],
+      "expected_chunk_hit_score": 0.8064
+    },
+    {
+      "id": "a15",
+      "query": "只想看某一条消息的原文怎么操作？",
+      "expected_section": "4.3 双击消息",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 2,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 0.5,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 0.6309297535714575,
+      "rerank_final_scores": [
+        0.9297,
+        0.8605,
+        0.8361,
+        0.7716
+      ],
+      "candidate_rerank_scores": [
+        0.9297,
+        0.8605,
+        0.8361,
+        0.7716,
+        0.6168,
+        0.565,
+        0.5096,
+        0.4922
+      ],
+      "expected_chunk_hit_score": 0.8605
+    },
+    {
+      "id": "a16",
+      "query": "播客模式怎么开启？",
+      "expected_section": "4.4 长按消息",
+      "rerank_used": true,
+      "rrf_hit_rank": 2,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 0.5,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 0.6309297535714575,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.9379,
+        0.9313,
+        0.9017
+      ],
+      "candidate_rerank_scores": [
+        0.9379,
+        0.9313,
+        0.9017,
+        0.4749,
+        0.4621,
+        0.4616,
+        0.4439,
+        0.4364
+      ],
+      "expected_chunk_hit_score": 0.9379
+    },
+    {
+      "id": "a17",
+      "query": "通勤路上不方便看手机，有什么适合我的功能？",
+      "expected_section": "4.4 长按消息",
+      "rerank_used": true,
+      "rrf_hit_rank": 2,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 0.5,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 0.6309297535714575,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8321
+      ],
+      "candidate_rerank_scores": [
+        0.8321,
+        0.4091,
+        0.4035,
+        0.3931,
+        0.3564,
+        0.3431,
+        0.3267,
+        0.3239
+      ],
+      "expected_chunk_hit_score": 0.8321
+    },
+    {
+      "id": "a18",
+      "query": "Memo 是什么？会给我布置学习任务吗？",
+      "expected_section": "5.1 Memo 是什么",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 2,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 0.5,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 0.6309297535714575,
+      "rerank_final_scores": [
+        0.8959,
+        0.8154,
+        0.6549
+      ],
+      "candidate_rerank_scores": [
+        0.8959,
+        0.8154,
+        0.6549,
+        0.5231,
+        0.4472,
+        0.3278,
+        0.3126,
+        0.2391
+      ],
+      "expected_chunk_hit_score": 0.8154
+    },
+    {
+      "id": "a19",
+      "query": "Memo 里可以保存哪些内容？",
+      "expected_section": "5.2 Memo 可以保存的内容",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.9258,
+        0.8646,
+        0.8336,
+        0.7457
+      ],
+      "candidate_rerank_scores": [
+        0.9258,
+        0.8646,
+        0.8336,
+        0.7457,
+        0.6319,
+        0.6163,
+        0.3943,
+        0.3144
+      ],
+      "expected_chunk_hit_score": 0.9258
+    },
+    {
+      "id": "a20",
+      "query": "聊天时看到生词怎么收藏到 Memo？",
+      "expected_section": "5.4 从对话收藏内容到 Memo",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.9147,
+        0.6858,
+        0.6087,
+        0.6077
+      ],
+      "candidate_rerank_scores": [
+        0.9147,
+        0.6858,
+        0.6087,
+        0.6077,
+        0.5889,
+        0.513,
+        0.4081,
+        0.3428
+      ],
+      "expected_chunk_hit_score": 0.9147
+    },
+    {
+      "id": "a21",
+      "query": "AI 语伴会纠正我的语法错误吗？",
+      "expected_section": "6.1 AI 语伴是什么",
+      "rerank_used": true,
+      "rrf_hit_rank": 2,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 0.5,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 0.6309297535714575,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.9115,
+        0.6865,
+        0.6454
+      ],
+      "candidate_rerank_scores": [
+        0.9115,
+        0.6865,
+        0.6454,
+        0.5388,
+        0.4185,
+        0.3632,
+        0.3147,
+        0.2578
+      ],
+      "expected_chunk_hit_score": 0.9115
+    },
+    {
+      "id": "a22",
+      "query": "身边没有外国朋友练口语怎么办？",
+      "expected_section": "6.3 AI 语伴与真人聊天的关系",
+      "rerank_used": true,
+      "rrf_hit_rank": 3,
+      "rerank_hit_rank": null,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 0.0,
+      "rrf_mrr": 0.3333333333333333,
+      "rerank_mrr": 0.0,
+      "rrf_ndcg@4": 0.5,
+      "rerank_ndcg@4": 0.0,
+      "rerank_final_scores": [],
+      "candidate_rerank_scores": [
+        0.5055,
+        0.4548,
+        0.4292,
+        0.3713,
+        0.3503,
+        0.2539,
+        0.2504,
+        0.2231
+      ],
+      "expected_chunk_hit_score": 0.4548
+    },
+    {
+      "id": "a23",
+      "query": "空气小猪有系统课程吗？",
+      "expected_section": "7.1 当前不提供的功能",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.9331,
+        0.8853,
+        0.8536,
+        0.7436
+      ],
+      "candidate_rerank_scores": [
+        0.9331,
+        0.8853,
+        0.8536,
+        0.7436,
+        0.7337,
+        0.7221,
+        0.5964,
+        0.5899
+      ],
+      "expected_chunk_hit_score": 0.9331
+    },
+    {
+      "id": "a24",
+      "query": "坚持用空气小猪能保证我通过雅思考试吗？",
+      "expected_section": "7.2 学习效果说明",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.7454,
+        0.7019,
+        0.6895
+      ],
+      "candidate_rerank_scores": [
+        0.7454,
+        0.7019,
+        0.6895,
+        0.5682,
+        0.562,
+        0.5482,
+        0.5273,
+        0.5252
+      ],
+      "expected_chunk_hit_score": 0.7454
+    },
+    {
+      "id": "a25",
+      "query": "点了一条消息但是没有任何声音，怎么办？",
+      "expected_section": "8.1 没有声音",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8916,
+        0.6151
+      ],
+      "candidate_rerank_scores": [
+        0.8916,
+        0.6151,
+        0.4466,
+        0.4436,
+        0.4213,
+        0.4207,
+        0.2981,
+        0.2886
+      ],
+      "expected_chunk_hit_score": 0.8916
+    },
+    {
+      "id": "a26",
+      "query": "外语显示太快了，原文还没看完就没了，怎么办？",
+      "expected_section": "8.3 显示太快",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.9579,
+        0.7281
+      ],
+      "candidate_rerank_scores": [
+        0.9579,
+        0.7281,
+        0.5789,
+        0.5788,
+        0.5776,
+        0.569,
+        0.479,
+        0.28
+      ],
+      "expected_chunk_hit_score": 0.9579
+    },
+    {
+      "id": "a27",
+      "query": "我可以学习哪些语言？",
+      "expected_section": "8.5 我可以学哪种语言",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8612,
+        0.6077
+      ],
+      "candidate_rerank_scores": [
+        0.8612,
+        0.6077,
+        0.4285,
+        0.4276,
+        0.4061,
+        0.4054,
+        0.3823,
+        0.3641
+      ],
+      "expected_chunk_hit_score": 0.8612
+    },
+    {
+      "id": "a28",
+      "query": "空气小猪要钱吗？以后会收费吗？",
+      "expected_section": "8.7 收费吗",
+      "rerank_used": true,
+      "rrf_hit_rank": 1,
+      "rerank_hit_rank": 1,
+      "rrf_recall@4": 1.0,
+      "rrf_recall@8": 1.0,
+      "rerank_recall@4": 1.0,
+      "rrf_mrr": 1.0,
+      "rerank_mrr": 1.0,
+      "rrf_ndcg@4": 1.0,
+      "rerank_ndcg@4": 1.0,
+      "rerank_final_scores": [
+        0.8895,
+        0.6988
+      ],
+      "candidate_rerank_scores": [
+        0.8895,
+        0.6988,
+        0.5988,
+        0.5938,
+        0.5656,
+        0.5273,
+        0.5119,
+        0.4807
+      ],
+      "expected_chunk_hit_score": 0.8895
+    }
+  ],
+  "threshold_analysis": {
+    "total_candidates": 224,
+    "relevant_count": 29,
+    "irrelevant_count": 195,
+    "all_scores": {
+      "p0": 0.1425,
+      "p10": 0.2991,
+      "p25": 0.4027,
+      "p50": 0.5262,
+      "p75": 0.7029,
+      "p90": 0.8824,
+      "p100": 0.9579
+    },
+    "relevant_scores": {
+      "p0": 0.4548,
+      "p25": 0.8154,
+      "p50": 0.8612,
+      "p75": 0.9115,
+      "p100": 0.9579
+    },
+    "irrelevant_scores": {
+      "p0": 0.1425,
+      "p25": 0.3773,
+      "p50": 0.4899,
+      "p75": 0.6217,
+      "p100": 0.9313
+    },
+    "histogram_all": {
+      "0.1-0.2": 2,
+      "0.2-0.3": 22,
+      "0.3-0.4": 31,
+      "0.4-0.5": 48,
+      "0.5-0.6": 37,
+      "0.6-0.7": 27,
+      "0.7-0.8": 14,
+      "0.8-0.9": 29,
+      "0.9-1.0": 14
+    },
+    "histogram_relevant": {
+      "0.4-0.5": 1,
+      "0.5-0.6": 1,
+      "0.6-0.7": 1,
+      "0.7-0.8": 2,
+      "0.8-0.9": 16,
+      "0.9-1.0": 8
+    },
+    "histogram_irrelevant": {
+      "0.1-0.2": 2,
+      "0.2-0.3": 22,
+      "0.3-0.4": 31,
+      "0.4-0.5": 47,
+      "0.5-0.6": 36,
+      "0.6-0.7": 26,
+      "0.7-0.8": 12,
+      "0.8-0.9": 13,
+      "0.9-1.0": 6
+    },
+    "per_threshold": [
+      {
+        "threshold": 0.4,
+        "relevant_below": 0,
+        "irrelevant_kept": 140,
+        "relevant_kept": 29
+      },
+      {
+        "threshold": 0.5,
+        "relevant_below": 1,
+        "irrelevant_kept": 93,
+        "relevant_kept": 28
+      },
+      {
+        "threshold": 0.6,
+        "relevant_below": 2,
+        "irrelevant_kept": 57,
+        "relevant_kept": 27
+      },
+      {
+        "threshold": 0.7,
+        "relevant_below": 3,
+        "irrelevant_kept": 31,
+        "relevant_kept": 26
+      },
+      {
+        "threshold": 0.8,
+        "relevant_below": 5,
+        "irrelevant_kept": 19,
+        "relevant_kept": 24
+      }
+    ]
+  },
+  "answer_layer": {
+    "metrics": {
+      "answer_accuracy": 0.9286,
+      "refusal_accuracy": 1.0,
+      "answerable_refused_rate": 0.0357,
+      "unanswerable_answered_rate": 0.0
+    },
+    "ambiguous_breakdown": {
+      "total": 4,
+      "refused": 3
+    },
+    "per_item": [
+      {
+        "id": "a01",
+        "query": "空气小猪是翻译软件吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "不是。空气小猪不是翻译软件，也不是语言教学工具。它是在不改变聊天语言的前提下，先让你理解原始信息，再通过自动朗读和播客模式，把聊天内容转化为持续的个人外语环境。",
+        "correct": true,
+        "chunks_used": 4
+      },
+      {
+        "id": "a02",
+        "query": "你们和普通翻译软件有什么区别？",
+        "type": "answerable",
+        "useful": true,
+        "content": "我们不是翻译软件。翻译软件解决的是“看懂外语”，空气小猪解决的是“看懂之后持续被目标语覆盖”，让外语自然融入你的日常生活。",
+        "correct": true,
+        "chunks_used": 1
+      },
+      {
+        "id": "a03",
+        "query": "为什么我学了那么久外语，还是没法在日常生活里用起来？",
+        "type": "answerable",
+        "useful": true,
+        "content": "常见原因是外语只存在于“学习时间”，进不了日常生活；输入和输出割裂，材料又与个人生活无关，所以难以迁移到真实使用。空气小猪通过重用你的聊天内容，帮你建立长期、低成本、贴近真实生活的外语环境。",
+        "correct": true,
+        "chunks_used": 1
+      },
+      {
+        "id": "a04",
+        "query": "空气小猪在哪些设备上可以用？小程序体验怎么样？",
+        "type": "answerable",
+        "useful": true,
+        "content": "空气小猪支持安卓、iOS、鸿蒙App及小程序，但纯血鸿蒙暂不支持。小程序仅有基本功能，建议使用App，体验更好、功能更完善。",
+        "correct": true,
+        "chunks_used": 4
+      },
+      {
+        "id": "a05",
+        "query": "纯血鸿蒙的手机能安装吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "纯血版本鸿蒙暂不支持安装空气小猪。您可尝试使用小程序（功能较基础），或换用安卓、iOS设备使用App，体验更佳。",
+        "correct": true,
+        "chunks_used": 3
+      },
+      {
+        "id": "a06",
+        "query": "怎么邀请微信好友一起聊天？",
+        "type": "answerable",
+        "useful": true,
+        "content": "在空气小猪App内使用邀请功能，即可邀请微信好友参与聊天；对方加入后，你们还能各自设置自己的目标语言。",
+        "correct": false,
+        "chunks_used": 1
+      },
+      {
+        "id": "a07",
+        "query": "我的朋友不想学外语，我们还能一起用吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "可以的。使用空气小猪不要求聊天对方配合学外语，你和朋友仍用原本熟悉的语言聊天，对方无需改变聊天语言。",
+        "correct": true,
+        "chunks_used": 2
+      },
+      {
+        "id": "a08",
+        "query": "我和朋友设置的目标语言不一样可以吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "可以的。每个用户可以独立设置自己的目标语言，双方互不影响。比如你学英语、朋友学日语，你们会各自看到与自己设置对应的目标语言版本。",
+        "correct": true,
+        "chunks_used": 4
+      },
+      {
+        "id": "a09",
+        "query": "国外的手机号可以注册吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "暂时不支持的，目前仅支持国内的手机号码注册。如有其他问题，欢迎随时咨询～",
+        "correct": true,
+        "chunks_used": 1
+      },
+      {
+        "id": "a10",
+        "query": "可以用微信登录吗？还支持哪些登录方式？",
+        "type": "answerable",
+        "useful": true,
+        "content": "可以的。App 支持手机号验证码登录、微信登录和 Apple 账号登录；小程序支持手机号验证码登录和微信一键登录。",
+        "correct": true,
+        "chunks_used": 1
+      },
+      {
+        "id": "a11",
+        "query": "朋友发消息过来，我会先看到外语还是原文？",
+        "type": "answerable",
+        "useful": true,
+        "content": "您会先看到对方发送的原始语言（原文），理解后系统再转换成您设置的目标语言并自动朗读。",
+        "correct": true,
+        "chunks_used": 4
+      },
+      {
+        "id": "a12",
+        "query": "我发出去的消息，对方看到的是翻译后的外语吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "不是。对方看到的仍是你输入的原始语言，不会变成翻译后的目标语言。翻译只在你这边显示并朗读，方便你理解对方消息；你发出的内容对方看到的是原文。",
+        "correct": true,
+        "chunks_used": 3
+      },
+      {
+        "id": "a13",
+        "query": "单击一条聊天消息会发生什么？",
+        "type": "answerable",
+        "useful": true,
+        "content": "单击任意一条聊天消息，空气小猪会朗读该消息对应的目标语言内容（而非原始输入）。需要重听时，再单击一次该消息即可。",
+        "correct": true,
+        "chunks_used": 3
+      },
+      {
+        "id": "a14",
+        "query": "怎么一次看到整段对话的全部原文？",
+        "type": "answerable",
+        "useful": true,
+        "content": "双击当前对话的空白处，即可还原整段对话的全部原文输入。若只想看某一条消息的原文，双击该条消息即可。",
+        "correct": true,
+        "chunks_used": 3
+      },
+      {
+        "id": "a15",
+        "query": "只想看某一条消息的原文怎么操作？",
+        "type": "answerable",
+        "useful": true,
+        "content": "双击该条消息即可，就能只查看这条消息的原始输入；需要还原全部原文时，双击对话空白处即可。",
+        "correct": true,
+        "chunks_used": 4
+      },
+      {
+        "id": "a16",
+        "query": "播客模式怎么开启？",
+        "type": "answerable",
+        "useful": true,
+        "content": "长按任意一条消息即可开启播客模式。空气小猪会从该条消息开始，按时间顺序连续朗读后续所有消息，包括对方消息和你自己消息转换后的目标语言内容，适合通勤、运动等不方便看屏幕的场景。",
+        "correct": true,
+        "chunks_used": 3
+      },
+      {
+        "id": "a17",
+        "query": "通勤路上不方便看手机，有什么适合我的功能？",
+        "type": "answerable",
+        "useful": true,
+        "content": "推荐开启「播客模式」：长按任意一条消息即可开启，空气小猪会从该条消息起按时间顺序连续朗读后续所有消息（含对方消息和你自己消息转换后的目标语言），非常适合通勤、走路等不方便看屏幕的场景。",
+        "correct": true,
+        "chunks_used": 1
+      },
+      {
+        "id": "a18",
+        "query": "Memo 是什么？会给我布置学习任务吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "Memo 是空气小猪的语言材料管理系统，用于集中保存和整理你真实使用中积累的个人语言材料。它不是训练系统，不会自动安排复习，也不会给你布置学习任务。",
+        "correct": true,
+        "chunks_used": 3
+      },
+      {
+        "id": "a19",
+        "query": "Memo 里可以保存哪些内容？",
+        "type": "answerable",
+        "useful": true,
+        "content": "Memo 可保存三类内容：1. 你在对话中积累的词汇和表达；2. 系统内置词书内容，如雅思、托福、考研词汇；3. 你生活中自行录入的词汇或表达。它以真实使用中的表达为单位记录，方便长期积累与查询。",
+        "correct": true,
+        "chunks_used": 4
+      },
+      {
+        "id": "a20",
+        "query": "聊天时看到生词怎么收藏到 Memo？",
+        "type": "answerable",
+        "useful": true,
+        "content": "在聊天中看到生词，有两个方法收藏到 Memo：一是单击该条消息旁边的心号即可收藏；二是查询不懂的单词后进行收藏。收藏的词汇会自动进入你的对话词卡。",
+        "correct": true,
+        "chunks_used": 4
+      },
+      {
+        "id": "a21",
+        "query": "AI 语伴会纠正我的语法错误吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "不会。AI 语伴不是老师，不承担教学任务，不讲解语法，也不会纠正你的语言错误。它主要用于提供目标语言的对话场景，补充真人聊天之外的语言使用机会。",
+        "correct": true,
+        "chunks_used": 3
+      },
+      {
+        "id": "a22",
+        "query": "身边没有外国朋友练口语怎么办？",
+        "type": "answerable",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": false,
+        "chunks_used": 0
+      },
+      {
+        "id": "a23",
+        "query": "空气小猪有系统课程吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "空气小猪当前不提供系统课程，也不进行语法教学、制定学习计划或安排每日任务复习。它主要用于帮你建立和维持语言环境，学习规划需自行安排。",
+        "correct": true,
+        "chunks_used": 4
+      },
+      {
+        "id": "a24",
+        "query": "坚持用空气小猪能保证我通过雅思考试吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "不能保证哦。空气小猪的价值在于帮你建立并维持语言环境，提升取决于你的使用频率和时长。我们不提供系统课程，也不对任何学习结果作出承诺。备考雅思建议配合专门课程使用。",
+        "correct": true,
+        "chunks_used": 3
+      },
+      {
+        "id": "a25",
+        "query": "点了一条消息但是没有任何声音，怎么办？",
+        "type": "answerable",
+        "useful": true,
+        "content": "先再次单击任意一条消息重听。如果仍没声音，请检查设备音量是否正常，并确认设备没有处于静音状态。",
+        "correct": true,
+        "chunks_used": 2
+      },
+      {
+        "id": "a26",
+        "query": "外语显示太快了，原文还没看完就没了，怎么办？",
+        "type": "answerable",
+        "useful": true,
+        "content": "可双击对话空白处还原全部原文，或双击对应消息查看该条原文，看完后再继续收听。",
+        "correct": true,
+        "chunks_used": 2
+      },
+      {
+        "id": "a27",
+        "query": "我可以学习哪些语言？",
+        "type": "answerable",
+        "useful": true,
+        "content": "当前支持学习英语、法语、德语、日语、韩语、西班牙语和粤语这7种语言。每个用户可独立选择自己的目标语言，双方设置互不影响。",
+        "correct": true,
+        "chunks_used": 2
+      },
+      {
+        "id": "a28",
+        "query": "空气小猪要钱吗？以后会收费吗？",
+        "type": "answerable",
+        "useful": true,
+        "content": "空气小猪目前免费开放使用，不收取任何费用。不过未来不排除会收费，具体以官方公告为准。建议您尽早体验～",
+        "correct": true,
+        "chunks_used": 2
+      },
+      {
+        "id": "u01",
+        "query": "你们的股票代码是多少？",
+        "type": "unanswerable",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "u02",
+        "query": "你们公司总部在哪个城市？",
+        "type": "unanswerable",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "u03",
+        "query": "我买完后悔了，退货退款政策是什么？",
+        "type": "unanswerable",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "u04",
+        "query": "你们怎么保护我的聊天隐私数据？",
+        "type": "unanswerable",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "u05",
+        "query": "什么时候出 Windows 电脑版？",
+        "type": "unanswerable",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "u06",
+        "query": "可以接入 WhatsApp 吗？",
+        "type": "unanswerable",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "u07",
+        "query": "你们公司现在有多少员工？",
+        "type": "unanswerable",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "u08",
+        "query": "和多邻国比哪个更好用？",
+        "type": "unanswerable",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "b01",
+        "query": "你好呀",
+        "type": "ambiguous",
+        "useful": true,
+        "content": "你好呀！我是产品咨询智能客服助手，很高兴为你服务。有什么产品相关的问题，随时告诉我～",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "b02",
+        "query": "你们这个产品怎么用啊",
+        "type": "ambiguous",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "b03",
+        "query": "再详细说说",
+        "type": "ambiguous",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      },
+      {
+        "id": "b04",
+        "query": "这个软件到底怎么样啊",
+        "type": "ambiguous",
+        "useful": false,
+        "content": "暂时不能回答这个问题",
+        "correct": true,
+        "chunks_used": 0
+      }
+    ],
+    "judge_verdicts": [
+      {
+        "id": "a01",
+        "query": "空气小猪是翻译软件吗？",
+        "answer": "不是。空气小猪不是翻译软件，也不是语言教学工具。它是在不改变聊天语言的前提下，先让你理解原始信息，再通过自动朗读和播客模式，把聊天内容转化为持续的个人外语环境。",
+        "contexts": [
+          "### 1.1 核心定位\n\n空气小猪不是翻译软件，也不是语言教学工具。翻译软件解决的是“看懂外语”，空气小猪解决的是“看懂之后持续被目标语覆盖”，让外语自然融入日常生活。",
+          "# 空气小猪产品知识库\n\n空气小猪是一款基于即时通讯的语言环境产品，也是全球首款基于熟人社交的 AI 语言产品。它在不改变聊天语言的前提下，让用户先理解原始信息，再通过自动朗读和播客模式，将聊天内容转化为个人外语环境。",
+          "## 一、产品概述\n\n空气小猪的核心定位是建立持续存在的个人语言环境，让目标语言自然融入用户已经发生的日常聊天。",
+          "## 七、当前产品能力边界\n\n空气小猪用于建立和维持语言环境，不承担系统教学、学习规划、能力评估或学习结果承诺。"
+        ],
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "reason": "答案中的全部事实性陈述均可在检索上下文中找到依据：不是翻译软件、不是语言教学工具来自上下文【1】；不改变聊天语言、先理解原始信息、通过自动朗读和播客模式将聊天内容转化为个人外语环境来自上下文【2】；持续的个人外语环境与【2】【3】中的持续语言环境表述一致。答案直接回应用户问题，明确回答“不是”并给出产品定位说明，切题且完整。",
+        "judge_error": false
+      },
+      {
+        "id": "a03",
+        "query": "为什么我学了那么久外语，还是没法在日常生活里用起来？",
+        "answer": "常见原因是外语只存在于“学习时间”，进不了日常生活；输入和输出割裂，材料又与个人生活无关，所以难以迁移到真实使用。空气小猪通过重用你的聊天内容，帮你建立长期、低成本、贴近真实生活的外语环境。",
+        "contexts": [
+          "### 1.2 解决的核心问题\n\n很多用户长期学习外语时，外语只存在于“学习时间”，无法进入日常生活；输入和输出相互割裂，学到的语言难以迁移到真实使用；听力和阅读材料与个人生活无关，也难以长期坚持。\n\n空气小猪不会增加额外学习任务，而是重用已经发生的聊天内容，为用户建立长期、低成本且与真实生活相关的外语环境。"
+        ],
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "reason": "答案中的事实性陈述均能从检索上下文找到依据：外语只存在于学习时间、无法进入日常生活、输入输出割裂、材料与个人生活无关、难以迁移到真实使用，以及空气小猪通过重用聊天内容建立长期低成本贴近生活的外语环境，均与上下文一致，未引入额外信息。答案也直接回应了用户“为什么学了久仍无法日常使用”的问题，核心原因解释清楚。",
+        "judge_error": false
+      },
+      {
+        "id": "a04",
+        "query": "空气小猪在哪些设备上可以用？小程序体验怎么样？",
+        "answer": "空气小猪支持安卓、iOS、鸿蒙App及小程序，但纯血鸿蒙暂不支持。小程序仅有基本功能，建议使用App，体验更好、功能更完善。",
+        "contexts": [
+          "### 2.1 使用平台\n\n用户可以通过 App（安卓、IOS、鸿蒙）、小程序使用空气小猪，其中纯血版本鸿蒙暂不支持。建议使用App，体验更好，功能更完善，小程序仅有基本功能",
+          "## Q：空气小猪怎么下载安装？\n\n可通过安卓、iOS应用商店下载App，或使用小程序；纯血鸿蒙暂不支持。建议使用App，体验更佳。",
+          "## 二、平台与使用前提\n\n空气小猪主要通过 App 使用，支持邀请微信好友参与聊天，并允许双方独立设置自己的目标语言。",
+          "## Q：我的手机号是[已脱敏:手机号]，想问空气小猪支持鸿蒙系统吗\n\n空气小猪支持鸿蒙系统，但纯血版本鸿蒙暂不支持。建议使用App，体验更佳。"
+        ],
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "reason": "答案中所有事实性陈述均可在检索上下文中找到依据：平台列表（安卓、iOS、鸿蒙App及小程序）对应【1】【2】【4】，纯血鸿蒙暂不支持对应【1】【2】【4】，小程序仅有基本功能、建议使用App且体验更好功能更完善对应【1】【2】，无上下文外信息。答案同时回答了设备可用范围与小程序体验两个问题核心，切题且完整。",
+        "judge_error": false
+      },
+      {
+        "id": "a06",
+        "query": "怎么邀请微信好友一起聊天？",
+        "answer": "在空气小猪App内使用邀请功能，即可邀请微信好友参与聊天；对方加入后，你们还能各自设置自己的目标语言。",
+        "contexts": [
+          "## 二、平台与使用前提\n\n空气小猪主要通过 App 使用，支持邀请微信好友参与聊天，并允许双方独立设置自己的目标语言。"
+        ],
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "reason": "答案中的两个事实性陈述均可在上下文中找到依据：上下文明确说明空气小猪主要通过 App 使用、支持邀请微信好友参与聊天，且允许双方独立设置自己的目标语言；答案只是将其转述为“在 App 内使用邀请功能”“对方加入后各自设置目标语言”，未引入上下文之外的实质信息或矛盾内容。答案也直接回应用户“怎么邀请微信好友一起聊天”的问题，指出在 App 内通过邀请功能并说明加入后可各自设置语言，切中问题核心。",
+        "judge_error": false
+      },
+      {
+        "id": "a07",
+        "query": "我的朋友不想学外语，我们还能一起用吗？",
+        "answer": "可以的。使用空气小猪不要求聊天对方配合学外语，你和朋友仍用原本熟悉的语言聊天，对方无需改变聊天语言。",
+        "contexts": [
+          "### 2.3 聊天对方是否需要配合\n\n使用空气小猪不要求聊天对方配合学习外语。用户和朋友仍然使用原本熟悉的语言聊天，对方不需要改变聊天语言。",
+          "## 六、AI 语伴\n\nAI 语伴为用户提供随时可用的目标语言对话场景，用于补充真人聊天之外的语言使用机会。"
+        ],
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "reason": "答案中的全部事实性陈述（使用空气小猪不要求聊天对方配合学外语、双方仍用原本熟悉的语言聊天、对方无需改变聊天语言）均可由检索上下文【1】直接支持，未引入上下文之外的信息，忠实度为 1.0。用户问题问的是朋友不想学外语时两人是否还能一起用，答案直接给出肯定结论并说明对方无需配合学外语、无需改变聊天语言，正面回答了问题核心，相关性为 1.0。",
+        "judge_error": false
+      }
+    ]
+  },
+  "judge_metrics": {
+    "faithfulness_mean": 1.0,
+    "answer_relevance_mean": 1.0,
+    "judged_count": 5,
+    "judge_error_count": 0,
+    "faithfulness_distribution": {
+      "1.0": 5,
+      "0.8-1.0": 0,
+      "0.5-0.8": 0,
+      "<0.5": 0
+    },
+    "answer_relevance_distribution": {
+      "1.0": 5,
+      "0.8-1.0": 0,
+      "0.5-0.8": 0,
+      "<0.5": 0
+    }
+  },
+  "gate": [
+    {
+      "metric": "retrieval.rerank_recall_at_4",
+      "value": 0.9286,
+      "threshold": 0.9,
+      "pass": true
+    },
+    {
+      "metric": "retrieval.rrf_recall_at_8",
+      "value": 1.0,
+      "threshold": 0.95,
+      "pass": true
+    },
+    {
+      "metric": "retrieval.rerank_mrr",
+      "value": 0.8393,
+      "threshold": 0.78,
+      "pass": true
+    },
+    {
+      "metric": "answer.answer_accuracy",
+      "value": 0.9286,
+      "threshold": 0.85,
+      "pass": true
+    },
+    {
+      "metric": "answer.refusal_accuracy",
+      "value": 1.0,
+      "threshold": 0.85,
+      "pass": true
+    },
+    {
+      "metric": "judge.faithfulness",
+      "value": 1.0,
+      "threshold": 0.85,
+      "pass": true
+    },
+    {
+      "metric": "judge.answer_relevance",
+      "value": 1.0,
+      "threshold": 0.85,
+      "pass": true
+    }
+  ],
+  "grid": null
+}
