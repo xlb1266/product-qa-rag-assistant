@@ -1,12 +1,13 @@
 """基于检索知识与对话历史的回答生成。
 
 提示词中三个 %s 依次填充【知识】【对话历史】【用户最新消息】。
-DeepSeek 以 JSON 模式输出 {useful, content}：useful 表示知识是否足以作答。
+DeepSeek 以 JSON 模式输出 {useful, content, citations}：useful 表示知识是否足以作答，
+citations 列出支撑回答的知识条目编号（对应【知识】中的【N】），由后端清洗后随回答落库。
 """
 
 import json
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from app.core.llm import get_llm_client
 from app.core.retrieval import RetrievedChunk
@@ -20,6 +21,7 @@ ANSWER_PROMPT_TEMPLATE = """## 角色
 3. 客观公正：遵循客观事实，不要胡编乱造，所有回答的内容都需要在【知识】内容中有迹可循，宁可不答也不要乱答
 4. 如果提供的知识与用户问题相关，正常作答，并将 useful=true；如果不相关或不足以解决，将 useful=false，并回复用户：暂时不能回答这个问题
 5. 用中文回复，不超过100字
+6. 引用溯源：content 中的每个事实都必须来自【知识】的某几条编号条目；在 citations 数组中列出支撑本次回答的条目编号（如 [1, 3]），正文里不要写编号；没有可引用的条目时 citations 为空数组 []；只能使用【知识】中真实存在的编号，不要编造
 
 ## 知识
 {
@@ -42,7 +44,8 @@ ANSWER_PROMPT_TEMPLATE = """## 角色
 ```json
 {
   "useful": boolean,
-  "content": "string"
+  "content": "string",
+  "citations": [1, 3]
 }
 ```
 """
@@ -55,6 +58,7 @@ _JSON_BLOCK_RE = re.compile(r"```(?:json)?\s*(.*?)\s*```", re.DOTALL)
 class AnswerResult:
     useful: bool
     content: str
+    citations: list[int] = field(default_factory=list)  # 支撑回答的知识条目编号（1 起）
 
 
 def _format_knowledge(chunks: list[RetrievedChunk]) -> str:
@@ -98,12 +102,30 @@ def _extract_json(text: str) -> dict:
         raise
 
 
+def _clean_citations(raw: object, n_chunks: int) -> list[int]:
+    """清洗模型返回的引用编号，脏编号不透传。
+
+    只接受 1~n_chunks 范围内的整数（bool 是 int 子类，先排除），
+    越界、字符串、浮点、重复一律丢弃；非列表整体视为无效，按空数组兜底。
+    """
+    if not isinstance(raw, list):
+        return []
+    cleaned: list[int] = []
+    for v in raw:
+        if isinstance(v, bool) or not isinstance(v, int):
+            continue
+        if 1 <= v <= n_chunks and v not in cleaned:
+            cleaned.append(v)
+    return cleaned
+
+
 async def generate_answer(
     history: list[dict], message: str, chunks: list[RetrievedChunk]
 ) -> AnswerResult:
     """调用 DeepSeek 基于知识生成回答。
 
-    解析失败时降级为 useful=False，保证链路不中断。
+    解析失败时降级为 useful=False，保证链路不中断；
+    citations 缺失或无效单独按空数组兜底，不拖垮整体解析。
     """
     content = await get_llm_client().chat(
         messages=[{"role": "user", "content": build_answer_prompt(chunks, history, message)}],
@@ -115,9 +137,11 @@ async def generate_answer(
         data = _extract_json(content)
         useful = bool(data.get("useful", False))
         text = str(data.get("content") or "").strip() or _FALLBACK_REPLY
+        citations = _clean_citations(data.get("citations"), len(chunks))
     except (json.JSONDecodeError, ValueError, AttributeError):
         return AnswerResult(useful=False, content=_FALLBACK_REPLY)
 
     if not useful:
         text = _FALLBACK_REPLY
-    return AnswerResult(useful=useful, content=text)
+        citations = []
+    return AnswerResult(useful=useful, content=text, citations=citations)
