@@ -50,6 +50,34 @@ function toMessage(m: MessageItem): Message {
 
 let _pendingSeq = -100 // 乐观临时消息的 id 生成器，负数避免与 DB id 冲突
 
+/** 引用来源面板：编号映射到检索 chunk 的标题，展开可看对应知识内容（样式复用检索参考面板） */
+function CitationPanel({ answer, retrieval }: { answer: AnswerInfo; retrieval: RetrievalInfo }) {
+  const citations = answer.citations ?? []
+  // 仅正常作答且模型给出了有效引用时展示；历史消息/拒答/无引用一律不渲染
+  if (!answer.useful || citations.length === 0) return null
+  return (
+    <details className="retrieval-panel citation-panel">
+      <summary className="retrieval-panel__summary">引用来源 · {citations.length} 条</summary>
+      {citations.map((num) => {
+        const chunk = retrieval.chunks[num - 1]
+        // 编号超出本次知识条数时后端已过滤，这里再兜底防脏数据
+        if (!chunk) return null
+        return (
+          <div key={num} className="retrieval-item">
+            <div className="retrieval-item__head">
+              <span className="retrieval-item__title">
+                【{num}】{chunk.heading_path || chunk.document_title}
+              </span>
+              <span className="retrieval-item__score">相关度 {(chunk.score * 100).toFixed(0)}%</span>
+            </div>
+            <div className="retrieval-item__content">{chunk.content}</div>
+          </div>
+        )
+      })}
+    </details>
+  )
+}
+
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([])
   const [loadingHistory, setLoadingHistory] = useState(true)
@@ -150,6 +178,9 @@ export default function ChatPage() {
                   <span className="bubble__rewritten">改写后：{m.intent.resolved_question}</span>
                 )}
               </div>
+            )}
+            {m.answer && m.retrieval && (
+              <CitationPanel answer={m.answer} retrieval={m.retrieval} />
             )}
             {m.retrieval && m.retrieval.chunks.length > 0 && (
               <details className="retrieval-panel">

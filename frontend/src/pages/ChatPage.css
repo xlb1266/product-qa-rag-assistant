@@ -166,6 +166,15 @@
   overflow: hidden;
 }
 
+/* 引用来源面板：复用检索参考面板底样式，主色区分"模型实际引用了哪些条" */
+.citation-panel {
+  border-color: var(--primary);
+}
+
+.citation-panel .retrieval-item__title {
+  color: var(--primary);
+}
+
 .chat-page__footer {
   display: flex;
   gap: 12px;
