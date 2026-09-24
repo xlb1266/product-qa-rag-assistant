@@ -17,7 +17,7 @@
 | `retrieval` | 百炼embedding + FAISS + 本地BM25 | 语义 + BM25 双路召回、RRF 融合，query 向量化耗时报错都记在这 | 编排层独立计时（含重排） |
 | `rerank` | 百炼 qwen3-rerank | 重排在 retrieve() 内部执行，编排层无法单独拆时 | duration_ms 恒为 0，耗时含入 retrieval 节点（output.note 注明） |
 | `answerability` | 本地规则（无外部调用） | 代码层拒答预判：检索结果为空、或最高 rerank 分数低于 `retrieval.answerability_threshold` 时直接拒答，不进 LLM。output.answerable=false 即本次请求被拦截 | 本地判断，独立计时（通常 0ms） |
-| `answer_generation` | DeepSeek | 基于检索知识生成回答，输出 useful/content/citations | 编排层独立计时 |
+| `answer_generation` | DeepSeek | 基于检索知识生成回答，输出 useful/content | 编排层独立计时 |
 | `chat_reply` | DeepSeek | CHAT 分支的闲聊回复 | 编排层独立计时 |
 
 ## 分支链路

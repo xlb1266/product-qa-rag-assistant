@@ -207,8 +207,6 @@ export interface ChatIntent {
 export interface AnswerInfo {
   useful: boolean
   content: string
-  /** 支撑回答的知识条目编号（对应 retrieval.chunks 下标+1）；历史消息无此字段，判空兼容 */
-  citations?: number[]
 }
 
 export interface ChatReply {

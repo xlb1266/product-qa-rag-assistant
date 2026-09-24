@@ -90,8 +90,6 @@ class RetrievalOut(BaseModel):
 class AnswerOut(BaseModel):
     useful: bool
     content: str
-    # 支撑回答的知识条目编号（对应 retrieval.chunks 下标+1）；历史消息无此字段，判空兼容
-    citations: list[int] = []
 
 
 class MessageOut(BaseModel):
@@ -438,19 +436,13 @@ async def chat(
                         useful=True,
                         content=f"[mock] 模拟回答（调试模式）：最相关的知识来自《{top.document_title}》"
                         f"「{top.heading_path or top.content[:24]}」，BM25 分数 {top.bm25_score}。",
-                        citations=[1],
                     )
                 else:
                     answer = AnswerResult(useful=False, content=FALLBACK_REPLY)
                 trace.append(
                     _make_node(
                         "answer_generation", "DeepSeek(mock)", answer_input,
-                        {
-                            "useful": answer.useful,
-                            "content": answer.content,
-                            "citations": answer.citations,
-                            "mocked": True,
-                        },
+                        {"useful": answer.useful, "content": answer.content, "mocked": True},
                         int((time.perf_counter() - t0) * 1000),
                     )
                 )
@@ -459,11 +451,7 @@ async def chat(
                 trace.append(
                     _make_node(
                         "answer_generation", "DeepSeek", answer_input,
-                        {
-                            "useful": answer.useful,
-                            "content": answer.content,
-                            "citations": answer.citations,
-                        },
+                        {"useful": answer.useful, "content": answer.content},
                         int((time.perf_counter() - t0) * 1000),
                     )
                 )
@@ -478,9 +466,7 @@ async def chat(
                         int((time.perf_counter() - chain_start) * 1000), "error")
             raise HTTPException(502, f"回答生成失败：{e}")
 
-    answer_out = AnswerOut(
-        useful=answer.useful, content=answer.content, citations=answer.citations
-    )
+    answer_out = AnswerOut(useful=answer.useful, content=answer.content)
     retrieval_out = _to_retrieval_out(retrieval)
 
     user_msg = _insert_message(user["id"], "user", req.message)
