@@ -11,8 +11,7 @@
 - config_changes: 运行参数修改历史（谁在什么时间把什么参数从多少改成多少）
 
 历史说明：数据飞轮（review_queue / qa_library 表及 messages 的 feedback 列）已于
-2026-09-22 移除，原件备份在 docs/attic/数据飞轮备份-2026-09-22/；旧库中已存在的
-表与列保留不删，只是代码不再读写。
+2026-09-22 整体移除；旧库中已存在的表与列保留不删，只是代码不再读写。
 """
 
 import sqlite3
@@ -168,7 +167,7 @@ class Database:
 
     def _seed_accounts(self) -> None:
         """首次启动时写入内置测试账号（已存在则跳过）。"""
-        from app.core.security import hash_password, generate_salt
+        from app.core.security import generate_salt, hash_password
 
         for account in _BUILTIN_ACCOUNTS:
             rows = self.query(

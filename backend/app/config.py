@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     sqlite_path: str = "data/knowledge.db"
 
     # 鉴权：Token 签名密钥与有效期（自签 HMAC-SHA256，零依赖）
-    auth_secret: str = "kongqixiaozhu-dev-secret-change-me"
+    auth_secret: str = "dev-secret-change-me"
     token_expire_days: int = 7
 
     # 允许跨域的前端来源
