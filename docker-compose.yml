@@ -1,0 +1,15 @@
+services:
+  backend:
+    build: ./backend
+    env_file: ./backend/.env          # 先 cp backend/.env.example backend/.env 并填入 Key
+    volumes:
+      - ./backend/data:/app/data      # SQLite 与 FAISS 索引持久化
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
