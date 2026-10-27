@@ -29,3 +29,5 @@ Thumbs.db
 *.log
 .playwright-cli/
 .zcode/
+.pytest_cache/
+.ruff_cache/

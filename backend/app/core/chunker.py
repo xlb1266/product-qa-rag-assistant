@@ -26,7 +26,7 @@ def split_markdown(text: str, max_chars: int = MAX_CHUNK_CHARS) -> list[dict]:
             return
         content = "\n".join(current["lines"]).strip()
         if content:
-            chunks.extend(_split_long(content, current["heading_path"]))
+            chunks.extend(_split_long(content, current["heading_path"], max_chars))
         current = None
 
     for line in text.splitlines():
@@ -53,8 +53,8 @@ def split_markdown(text: str, max_chars: int = MAX_CHUNK_CHARS) -> list[dict]:
     return chunks
 
 
-def _split_long(content: str, heading_path: str) -> list[dict]:
-    if len(content) <= MAX_CHUNK_CHARS:
+def _split_long(content: str, heading_path: str, max_chars: int = MAX_CHUNK_CHARS) -> list[dict]:
+    if len(content) <= max_chars:
         return [{"heading_path": heading_path, "content": content}]
 
     pieces: list[str] = []
@@ -62,13 +62,13 @@ def _split_long(content: str, heading_path: str) -> list[dict]:
     for para in (p.strip() for p in re.split(r"\n\s*\n", content)):
         if not para:
             continue
-        if len(para) > MAX_CHUNK_CHARS:
+        if len(para) > max_chars:
             if buf:
                 pieces.append(buf)
                 buf = ""
-            for i in range(0, len(para), MAX_CHUNK_CHARS):
-                pieces.append(para[i : i + MAX_CHUNK_CHARS])
-        elif len(buf) + len(para) + 2 <= MAX_CHUNK_CHARS:
+            for i in range(0, len(para), max_chars):
+                pieces.append(para[i : i + max_chars])
+        elif len(buf) + len(para) + 2 <= max_chars:
             buf = f"{buf}\n\n{para}" if buf else para
         else:
             pieces.append(buf)

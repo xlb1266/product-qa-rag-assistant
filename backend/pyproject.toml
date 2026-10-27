@@ -1,5 +1,5 @@
 [project]
-name = "kongqixiaozhu-backend"
+name = "product-qa-backend"
 version = "0.1.0"
 description = "基于知识库的 AI 客服问答系统 - 后端"
 requires-python = ">=3.12"
@@ -11,3 +11,20 @@ dependencies = [
     "httpx>=0.28.0",
     "python-multipart>=0.0.32",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "ruff>=0.7.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+# E4/E7/E9/F 为 ruff 官方推荐默认集；I 补导入排序。
+# 不开 B008：FastAPI 的 Depends() 默认参数是框架惯用法，不是坏味道。
+select = ["E4", "E7", "E9", "F", "I"]
