@@ -13,7 +13,7 @@
 """
 
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
 def content_hit(content: str, expected_keywords: list[str]) -> bool:

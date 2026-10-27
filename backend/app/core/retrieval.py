@@ -20,7 +20,7 @@ BM25 为纯本地索引照常执行——重放时不花钱也能看到真实检
 from dataclasses import dataclass, field
 
 from app.core.bm25 import get_bm25_index
-from app.core.embeddings import EmbeddingError, get_embedding_client
+from app.core.embeddings import get_embedding_client
 from app.core.reranker import RerankError, get_reranker
 from app.core.runtime_config import get_runtime
 from app.core.vector_store import get_vector_store

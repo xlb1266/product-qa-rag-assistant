@@ -15,13 +15,18 @@
 
 import json
 import time
-from typing import Any, Literal
+from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
 from app.api.messages import _row_to_dict
-from app.core.answer import FALLBACK_REPLY, AnswerResult, assess_answerability, generate_answer
+from app.core.answer import (
+    FALLBACK_REPLY,
+    AnswerResult,
+    assess_answerability,
+    generate_answer,
+)
 from app.core.embeddings import EmbeddingError
 from app.core.intent import CHAT, IntentResult, detect_intent
 from app.core.llm import LLMError, get_llm_client
@@ -506,4 +511,3 @@ def _to_retrieval_out(r: RetrievalResult) -> RetrievalOut:
 
 
 # 延迟导入避免循环依赖：embeddings 被 retrieval 引用，错误类型在此处使用
-from app.core.embeddings import EmbeddingError  # noqa: E402

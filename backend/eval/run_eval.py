@@ -37,16 +37,21 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.core.answer import FALLBACK_REPLY, AnswerResult, assess_answerability, generate_answer  # noqa: E402
+import judge as J  # noqa: E402
+import metrics as M  # noqa: E402
+
+from app.core.answer import (  # noqa: E402
+    FALLBACK_REPLY,
+    AnswerResult,
+    assess_answerability,
+    generate_answer,
+)
 from app.core.embeddings import get_embedding_client  # noqa: E402
 from app.core.llm import get_llm_client  # noqa: E402
 from app.core.reranker import RerankError, get_reranker  # noqa: E402
 from app.core.retrieval import RetrievalResult, retrieve  # noqa: E402
 from app.core.runtime_config import get_runtime  # noqa: E402
 from app.db.database import get_db  # noqa: E402
-
-import judge as J  # noqa: E402
-import metrics as M  # noqa: E402
 
 EVAL_DIR = Path(__file__).parent
 RESULTS_PATH = Path(__file__).resolve().parents[2] / "docs" / "eval"
@@ -499,7 +504,7 @@ async def main() -> None:
 
     items = select_items(args.limit)
     answerable = [it for it in items if it["type"] == "answerable"]
-    print(f"=== RAG 客服离线评测 ===")
+    print("=== RAG 客服离线评测 ===")
     mode = "CI 门禁" if args.ci else ("检索段 only" if retrieval_only else
                                      ("全量+裁判" if args.judge else "全量"))
     print(f"模式：{mode}")
@@ -614,7 +619,7 @@ async def main() -> None:
         failures = print_gate(gate_rows)
         if judge_metrics["judge_error_count"] > 0:
             failures.append(f"裁判失败 {judge_metrics['judge_error_count']} 条，生成段门禁无法验证")
-            print(f"  [FAIL] 生成段存在裁判失败条目，门禁视为未通过")
+            print("  [FAIL] 生成段存在裁判失败条目，门禁视为未通过")
         if failures:
             print("\n[门禁未通过] 跌破项：")
             for f in failures:
